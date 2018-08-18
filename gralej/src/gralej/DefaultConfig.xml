@@ -347,4 +347,6 @@ where RR = 2byte hex value for red
 -->
 <entry key="lrs.namemap">exists:eXists, forall:\u2200</entry>
 
+<entry key="lrs.expand.constraints">false</entry>
+
 </properties>

@@ -103,6 +103,8 @@ public class BlockPanel extends ChangeEventSource implements StyleChangeListener
     private HoverTimer _hoverTimer = new HoverTimer();
     
     private BoundedHistory<Block> _selectionHistory = new BoundedHistory<Block>(100);
+
+    private boolean _isExpandingTag;
     
     private static class SelectionEventSource extends ChangeEventSource {
         void fire(BlockPanel bp) {
@@ -967,4 +969,13 @@ public class BlockPanel extends ChangeEventSource implements StyleChangeListener
         d.setVisible(true);
         return d;
     }
+
+    boolean isExpandingTag() {
+        return _isExpandingTag;
+    }
+
+    void setExpandingTag(boolean value) {
+        _isExpandingTag = value;
+    }
 }
+

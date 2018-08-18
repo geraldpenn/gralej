@@ -65,10 +65,12 @@ public final class BlockCreator extends AbstractVisitor {
 
     private boolean _instantiateLazy = true;
     private static Set<String> _infixOps;
+    private boolean _expandCLLRSContraints;
     
     public BlockCreator(BlockPanel panel) {
         _panel = panel;
         _labfac = _panel.getStyle().getLabelFactory();
+        _expandCLLRSContraints = Config.bool("lrs.expand.constraints");
     }
 
     public Block createBlock(IVisitable vob) {
@@ -288,6 +290,16 @@ public final class BlockCreator extends AbstractVisitor {
             if (tag.number() != -1) {
                 tag.accept(this);
                 labels.add(_result);
+                if (_expandCLLRSContraints) {
+                    if (!_panel.isExpandingTag()) {
+                        _panel.setExpandingTag(true);
+                        try {
+                            ((ReentrancyBlock)_result).getTagLabel().flip();
+                        } finally {
+                            _panel.setExpandingTag(false);
+                        }
+                    }
+                }
             }
             else {
                 labels.add(_labfac.createLRSLabel("[*]", _panel));
